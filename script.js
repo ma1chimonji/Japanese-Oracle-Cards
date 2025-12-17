@@ -1,9 +1,8 @@
 (function(){
   const $ = (s)=>document.querySelector(s);
 
-  /* --- 1. カードデータ (JSオブジェクト形式に修正済み) --- */
+  // --- 1. カードデータ (文法修正済み) ---
   const ORACLE_DECK = [
-    // 第一の柱：神々のカード
     {id:1, category:"god", name:"天之御中主神", en:"Ame-no-Minakanushi", icon:"🌌", advice:"根源、宇宙の中心。恐れを手放し、大いなる流れに身を委ねなさい。"},
     {id:2, category:"god", name:"高御産巣日神/神産巣日神", en:"Musubi Gods", icon:"☯", advice:"結び、調和。陰と陽のバランスを取り、新しいものを生み出す時です。"},
     {id:3, category:"god", name:"天照大御神", en:"Amaterasu", icon:"☀", advice:"光、慈愛。隠れるのをやめ、あなたの光で周囲を照らしなさい。"},
@@ -26,12 +25,11 @@
     {id:20, category:"god", name:"宇迦之御魂神", en:"Ukanomitama", icon:"🦊", advice:"豊穣、収穫。努力が実り、豊かな恵みを受け取る準備をしなさい。"},
     {id:21, category:"god", name:"綿津見三神", en:"Watatsumi", icon:"🌊", advice:"海、冒険。未知の世界へ飛び込む勇気を。海原があなたを待っています。"},
     {id:22, category:"god", name:"宗像三女神", en:"Munakata", icon:"🚢", advice:"道、再出発。流れに身を任せれば安全です。旅立ちの時。"},
-    {id:23, category:"god", name:"塩椎神", en:"Shiotsuchi", icon:"🧂", advice:"導き、潮流。潮目が変わります。執着を手放し、知識を活かしなさい。"},
-    {id:24, category:"god", name:"菊理媛神", en:"Kukurihime", icon:"🎀", advice:"調停、統合。対立するもの同士を繋ぎ、新しい価値を生み出します。"},
-    {id:25, category:"god", name:"久延毘古", en:"Kuebiko", icon:"🌾", advice:"知恵、静観。動かずに観察することで、全ての答えが得られます。"},
-    {id:26, category:"god", name:"日本武尊", en:"Yamatotakeru", icon:"⚔", advice:"挑戦、完全燃焼。困難に立ち向かい、自分の意志を貫き通しなさい。"},
-    
-    // 第二の柱：精霊たち
+    {id:23, category:"god", name:"塩椎神", en:"Shiotsuchi", icon:"🧂", advice":"導き、潮流。潮目が変わります。執着を手放し、知識を活かしなさい。"},
+    {id:24, category:"god", name:"菊理媛神", en:"Kukurihime", icon:"🎀", advice":"調停、統合。対立するもの同士を繋ぎ、新しい価値を生み出します。"},
+    {id:25, category:"god", name:"久延毘古", en:"Kuebiko", icon:"🌾", advice":"知恵、静観。動かずに観察することで、全ての答えが得られます。"},
+    {id:26, category:"god", name:"日本武尊", en:"Yamatotakeru", icon:"⚔", advice":"挑戦、完全燃焼。困難に立ち向かい、自分の意志を貫き通しなさい。"},
+    // 精霊
     {id:27, category:"spirit", name:"龍神", en:"Dragon Spirit", icon:"🐉", advice:"強運、上昇気流。巨大なエネルギーが動いています。流れに乗って上昇しなさい。"},
     {id:28, category:"spirit", name:"天翔ける天狗", en:"Tengu", icon:"👺", advice:"飛躍、集中力。高い視点から物事を見て、一気に壁を飛び越えなさい。"},
     {id:29, category:"spirit", name:"白狐", en:"White Fox", icon:"🦊", advice:"変化、直感。予期せぬ変化が訪れます。柔軟に姿を変えて対応しなさい。"},
@@ -42,8 +40,7 @@
     {id:34, category:"spirit", name:"恥ずかしがり屋のコロボックル", en:"Koropokkuru", icon:"🍀", advice:"自然、思いやり。足元の小さな幸せや、見えない優しさに気づきなさい。"},
     {id:35, category:"spirit", name:"鬼", en:"Oni", icon:"👹", advice:"力、抑圧からの解放。自分の中の「恐れ」や「怒り」を認め、力に変えなさい。"},
     {id:36, category:"spirit", name:"人魚", en:"Mermaid", icon:"🧜", advice:"融合、歌。異なる世界を繋ぎなさい。あなたの声を響かせる時です。"},
-    
-    // 第三の柱：生命
+    // 生命
     {id:37, category:"life", name:"甦りの鳳凰", en:"Phoenix", icon:"🔥", advice:"復活、再生。古い自分は灰となり、新しく生まれ変わる準備ができました。"},
     {id:38, category:"life", name:"標の八咫烏", en:"Yatagarasu", icon:"🦅", advice:"方向性、ゴール。正しい道が示されています。迷わずその方角へ進みなさい。"},
     {id:39, category:"life", name:"時を告げる鶏", en:"Rooster", icon:"🐓", advice:"目覚め、夜明け。新しいサイクルの始まりです。声を上げて宣言しなさい。"},
@@ -53,8 +50,7 @@
     {id:43, category:"life", name:"知恵ある熊", en:"Bear", icon:"🐻", advice:"休息、内省。今は動く時ではありません。冬眠のように力を蓄えなさい。"},
     {id:44, category:"life", name:"変容する蝶", en:"Butterfly", icon:"🦋", advice:"変容、飛躍。サナギの時間は終わりました。美しく羽ばたく時です。"},
     {id:45, category:"life", name:"粘り強いガジュマル", en:"Banyan Tree", icon:"🌳", advice:"忍耐、基盤。焦る必要はありません。今はしっかりと根を張る時期です。"},
-    
-    // 第四の柱：大地
+    // 大地
     {id:46, category:"land", name:"悠久の富士山", en:"Mt. Fuji", icon:"🗻", advice:"不動、目標。あなたは守られています。どっしりと構え、高い目標を見据えて。"},
     {id:47, category:"land", name:"清らかな滝", en:"Waterfall", icon:"💧", advice:"浄化、洗い流す。過去の感情やわだかまりを水に流し、クリアになりなさい。"},
     {id:48, category:"land", name:"さざめく川", en:"River", icon:"🏞", advice:"流れ、継続。立ち止まらずに流れ続けなさい。海へとたどり着くでしょう。"},
@@ -65,61 +61,58 @@
     {id:53, category:"land", name:"雷神", en:"Raijin", icon:"⚡", advice:"衝撃、覚醒。稲妻のようなインスピレーションが、現状を打破します。"}
   ];
 
-  /* --- 2. スプレッド定義 --- */
+  /* --- 2. スプレッド定義 (座標調整版) --- */
+  // スマホで見切れないよう、左右を20%～80%の範囲に収めました
   const spreads = {
-    // 1枚引き
     oneCard: { name: "一霊（今日の神託）", positions: [ {id:1, mean:"御神託", pos:[50,50]} ] },
     
-    // 3枚引き (過去・現在・未来)
-    threePillars: { name: "三柱（過去・現在・未来）", positions: [ 
-      {id:1, mean:"過去(根)", pos:[20, 50]}, 
-      {id:2, mean:"現在(幹)", pos:[50, 50]}, 
-      {id:3, mean:"未来(枝)", pos:[80, 50]} 
+    letGoGrow: { name: "手放す/育てる", positions: [ 
+      {id:1, mean:"手放すべき", pos:[50, 35]}, 
+      {id:2, mean:"育てる本質", pos:[50, 65]} 
     ]},
     
-    // 鳥居スプレッド (4枚: 結界と突破)
+    pastPresentFuture: { name: "三柱（過去・現在・未来）", positions: [ 
+      {id:1, mean:"過去", pos:[50, 20]}, 
+      {id:2, mean:"現在", pos:[50, 50]}, 
+      {id:3, mean:"未来", pos:[50, 80]} 
+    ]},
+    
     torii: { name: "鳥居（結界と突破）", positions: [ 
       {id:1, mean:"現状", pos:[30, 50]}, 
-      {id:2, mean:"障害/課題", pos:[70, 50]}, 
-      {id:3, mean:"天啓(上)", pos:[50, 20]}, 
-      {id:4, mean:"基盤(下)", pos:[50, 80]} 
+      {id:2, mean:"障害", pos:[70, 50]}, 
+      {id:3, mean:"天啓", pos:[50, 20]}, 
+      {id:4, mean:"基盤", pos:[50, 80]} 
     ]},
     
-    // 産霊(むすび)スプレッド (5枚: 二者択一)
+    // 産霊：左右を80%以内に
     musubi: { name: "産霊（二者択一）", positions: [
       {id:1, mean:"岐路", pos:[80, 50]},
-      {id:2, mean:"道A", pos:[30, 25]},
-      {id:3, mean:"道B", pos:[30, 75]},
-      {id:4, mean:"Aの結末", pos:[55, 25]},
-      {id:5, mean:"Bの結末", pos:[55, 75]}
+      {id:2, mean:"道A", pos:[35, 25]},
+      {id:3, mean:"道B", pos:[35, 75]},
+      {id:4, mean:"A結末", pos:[60, 25]},
+      {id:5, mean:"B結末", pos:[60, 75]}
     ]},
     
-    // 社(やしろ)スプレッド (6枚: 全体運)
+    // 社：左右を80%以内に
     shrine: { name: "社（全体運）", positions: [
-      {id:1, mean:"本質", pos:[50, 50]},       // 中心
-      {id:2, mean:"願望", pos:[20, 50]},       // 上
-      {id:3, mean:"潜在", pos:[80, 50]},       // 下
-      {id:4, mean:"環境", pos:[50, 20]},       // 左
-      {id:5, mean:"行動", pos:[50, 80]},       // 右
-      {id:6, mean:"結論", pos:[50, 50], z:2, rotate: 90} // 中心に重ねる
+      {id:1, mean:"本質", pos:[50, 50]},       
+      {id:2, mean:"願望", pos:[20, 50]},       
+      {id:3, mean:"潜在", pos:[80, 50]},       
+      {id:4, mean:"環境", pos:[50, 20]},       
+      {id:5, mean:"行動", pos:[50, 80]},       
+      {id:6, mean:"結論", pos:[50, 50], z:2, rotate: 90} 
     ]},
 
-    // 頂いた画像のスプレッド
-    letGoGrow: { name: "手放す/育てる", positions: [ 
-      {id:1, mean:"手放すべきもの", pos:[50, 30]}, 
-      {id:2, mean:"育てるべき本質", pos:[50, 70]} 
-    ]},
-    
     essentialKey: { name: "必要不可欠な鍵", positions: [ 
-      {id:1, mean:"現在の状況", pos:[45, 50]}, 
-      {id:2, mean:"過去の出来事", pos:[50, 25]}, 
-      {id:3, mean:"自分の能力", pos:[35, 75]}, 
-      {id:4, mean:"情熱・興味", pos:[25, 85], rotate: 20}, 
-      {id:5, mean:"起こりうる結果", pos:[55, 75]} 
+      {id:1, mean:"現状", pos:[45, 50]}, 
+      {id:2, mean:"過去", pos:[50, 25]}, 
+      {id:3, mean:"能力", pos:[35, 75]}, 
+      {id:4, mean:"情熱", pos:[25, 80], rotate: 20}, 
+      {id:5, mean:"結果", pos:[55, 75]} 
     ]},
 
     lifePath: { name: "人生の道", positions: [
-      {id:1, mean:"人生の道", pos:[30, 30]},
+      {id:1, mean:"道", pos:[30, 30]},
       {id:2, mean:"影", pos:[30, 70]},
       {id:3, mean:"去年", pos:[60, 20]},
       {id:4, mean:"今年", pos:[60, 50]},
@@ -127,7 +120,7 @@
     ]}
   };
 
-  /* --- 3. Particle System (演出用) --- */
+  /* --- 3. Particle System --- */
   class ParticleSystem {
     constructor(canvasId) {
       this.canvas = document.getElementById(canvasId);
@@ -194,7 +187,7 @@
   
   const particles = new ParticleSystem('particle-canvas');
   let isDrawerOpen = false;
-  let drawnIds = []; // 重複防止用リスト
+  let drawnIds = []; // 重複防止用
 
   el.toggle.onclick = () => { isDrawerOpen = !isDrawerOpen; el.drawer.classList.toggle('active', isDrawerOpen); };
 
@@ -207,21 +200,22 @@
     el.select.value = 'oneCard';
   }
 
+  // Draw Button
   el.btn.onclick = () => {
     const spreadKey = el.select.value;
     const spreadData = spreads[spreadKey];
     
     el.container.innerHTML = '';
     el.welcome.classList.add('hidden');
-    drawnIds = []; // 重複リストをクリア
+    drawnIds = []; 
 
     if(window.innerWidth <= 768) { el.drawer.classList.remove('active'); isDrawerOpen = false; }
 
     addLog('拝礼', `展開: ${spreadData.name}`);
-    spreadData.positions.forEach(pos => createCardSlot(pos));
+    spreadData.positions.forEach(pos => createCardSlot(pos, spreadData.name));
   };
 
-  function createCardSlot(posInfo){
+  function createCardSlot(posInfo, spreadName){
     const slot = document.createElement('div');
     slot.className = 'card-slot';
     
@@ -230,7 +224,6 @@
     if(posInfo.rotate) slot.style.transform = `rotate(${posInfo.rotate}deg)`;
     if(posInfo.z) slot.style.zIndex = posInfo.z;
 
-    // 裏面に意味を表示
     slot.innerHTML = `
       <div class="card">
         <div class="card-face card-back">
@@ -241,42 +234,57 @@
       </div>
     `;
 
-    slot.onclick = function(e){
+    slot.onclick = async function(e){
       if(this.classList.contains('flipped')) return;
       
       const rect = el.main.getBoundingClientRect();
       particles.createExplosion(e.clientX - rect.left, e.clientY - rect.top);
       
-      // ★ 重複なし抽選ロジック ★
-      let available = ORACLE_DECK.filter(c => !drawnIds.includes(c.id));
-      if(available.length === 0) { available = ORACLE_DECK; drawnIds = []; }
-      
-      const c = available[Math.floor(Math.random() * available.length)];
-      drawnIds.push(c.id);
+      // API call
+      try {
+        const response = await fetch('/api/draw', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                spread_name: spreadName,
+                pos_mean: posInfo.mean,
+                drawn_ids: drawnIds
+            })
+        });
+        
+        if (!response.ok) throw new Error('Network response');
+        
+        const data = await response.json();
+        const c = data.card;
+        drawnIds.push(c.id);
 
-      // カテゴリ判定
-      let catClass = "category-god";
-      let catLabel = "神";
-      if(c.category === "spirit") { catClass = "category-spirit"; catLabel = "精霊"; }
-      if(c.category === "life")   { catClass = "category-life";   catLabel = "生命"; }
-      if(c.category === "land")   { catClass = "category-land";   catLabel = "大地"; }
+        let catClass = "category-god";
+        let catLabel = "神";
+        if(c.category === "spirit") { catClass = "category-spirit"; catLabel = "精霊"; }
+        if(c.category === "life")   { catClass = "category-life";   catLabel = "生命"; }
+        if(c.category === "land")   { catClass = "category-land";   catLabel = "大地"; }
 
-      const front = this.querySelector('.card-front');
-      front.classList.add(catClass);
+        const front = this.querySelector('.card-front');
+        front.classList.add(catClass);
 
-      front.innerHTML = `
-        <div class="pos-badge">${posInfo.mean}</div>
-        <div class="card-content">
-          <span class="category-badge" style="font-size:9px; border:1px solid currentColor; border-radius:4px; padding:2px 6px;">${catLabel}</span>
-          <div class="kami-icon">${c.icon}</div>
-          <div class="card-name-jp">${c.name}</div>
-          <div class="card-name-en">${c.en}</div>
-          <div class="card-meaning">${c.advice}</div>
-        </div>
-      `;
-      
-      this.classList.add('flipped');
-      addLog(c.name, `[${catLabel}] ${posInfo.mean}`);
+        front.innerHTML = `
+          <div class="pos-badge">${posInfo.mean}</div>
+          <div class="card-content">
+            <span class="category-badge" style="font-size:9px; border:1px solid currentColor; border-radius:4px; padding:2px 6px;">${catLabel}</span>
+            <div class="kami-icon">${c.icon}</div>
+            <div class="card-name-jp">${c.name}</div>
+            <div class="card-name-en">${c.en}</div>
+            <div class="card-meaning">${c.advice}</div>
+          </div>
+        `;
+        
+        this.classList.add('flipped');
+        addLog(c.name, `[${catLabel}] ${posInfo.mean}`);
+
+      } catch (err) {
+        console.error("API Error:", err);
+        alert("神託を受け取れませんでした。サーバーを確認してください。");
+      }
     };
     
     el.container.appendChild(slot);
@@ -288,6 +296,7 @@
     el.list.prepend(li);
   }
 
+  // Save Image
   el.saveBtn.onclick = function(){
     const t = el.main;
     const txt = el.saveBtn.textContent;
